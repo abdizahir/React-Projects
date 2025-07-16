@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+html, body, #root {
+  font-family: "Kumbh Sans", sans-serif;
+  height: 100%;
+}
+
+.ss{
+  color: hsl(220, 13%, 13%);
+  color: hsl(219, 9%, 45%);
+  color: hsl(220, 14%, 75%);
+  color: hsl(223, 64%, 98%);
+  color: hsl(0, 0%, 100%);
+  color:  hsl(0, 0%, 0%);
+}
