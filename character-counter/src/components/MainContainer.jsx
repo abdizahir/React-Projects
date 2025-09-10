@@ -90,12 +90,12 @@ function MainContainer() {
                 <div className="sm:flex sm:justify-between">
                     <div className="sm:flex sm:gap-2">
                         <article className="flex items-center gap-3 mb-2">
-                            <input className="" type="checkbox" name="" id="" onChange={handleSpaceInputCheckChange} />
-                            <label htmlFor="checkbox" className="text-ba">Exclude Spaces</label>
+                            <input className="" type="checkbox" name="" id="space-checkbox" onChange={handleSpaceInputCheckChange} />
+                            <label htmlFor="space-checkbox" className="text-ba">Exclude Spaces</label>
                         </article>
                         <article className="flex items-center gap-3 mb-2">
-                            <input className="" type="checkbox" name="" id="" onChange={handleCharacterLimitIsChecked} />
-                            <label htmlFor="checkbox" className=" text-ba">Set Character Limit</label>
+                            <input className="" type="checkbox" name="" id="limit-checkbox" onChange={handleCharacterLimitIsChecked} />
+                            <label htmlFor="limit-checkbox" className=" text-ba">Set Character Limit</label>
                             {characterLimitIsChecked && <input type="text" className="w-16 sm:w-14 h-9 sm:h-7 border-1 border-natural-600 rounded-md text-center" value={limitInput} onChange={handleLimitChange} />}
                         </article>
                     </div>

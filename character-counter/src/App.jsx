@@ -12,13 +12,13 @@ function App() {
   const bgClass = darkMode ? 'bg-natural-900' : 'bg-natural-100';
   const textClass = darkMode ? 'text-natural-200' : 'text-natural-700';
   return (
-      <main className={`p-4 md:py-8 md:px-40 sm:py-4 sm:px-8 ${bgClass} ${textClass}`}>
+      <div className={`p-4 md:py-8 md:px-40 sm:py-4 sm:px-8 ${bgClass} ${textClass}`}>
       <Header />
       <MainContainer />
       <StateContainer />
       <DensityContainer />
       <Footer />
-      </main>
+      </div>
   )
 }
 
