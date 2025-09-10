@@ -35,3 +35,7 @@ The Character Counter is a simple React + Vite application that helps users coun
 - HTML5 & CSS3
 - Tailwind
 - JavaScript (ES6+)
+
+## Author
+**Abdallah Mohammed**  
+- GitHub: [github.com/your-username](https://github.com/abdizahir)   
