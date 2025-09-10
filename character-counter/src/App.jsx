@@ -5,6 +5,7 @@ import DensityContainer from './components/DensityContainer';
 import Header from './components/Header';
 import MainContainer from './components/MainContainer';
 import StateContainer from './components/StateContainer';
+import Footer from './components/Footer';
 
 function App() {
   const {darkMode} = useContext(ThemeContext);
@@ -16,6 +17,7 @@ function App() {
       <MainContainer />
       <StateContainer />
       <DensityContainer />
+      <Footer />
       </main>
   )
 }

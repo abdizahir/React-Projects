@@ -27,7 +27,7 @@ The Character Counter is a simple React + Vite application that helps users coun
 
 ## 🔗 Links
 - Solution URL (GitHub Repository): [Link](https://github.com/abdizahir/React-Projects/tree/main/character-counter)  
-- Live Site URL (Deployed App): [Link](https://your-live-site-url.com)
+- Live Site URL (Deployed App): [Link](https://chipper-marzipan-df920c.netlify.app/)
 
 ## 🛠️ Built With
 - React – JS library
