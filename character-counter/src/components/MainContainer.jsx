@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CharacterContext } from "../store/CharacterContext";
 import { ThemeContext } from '../store/ThemeContext';
 
@@ -12,64 +12,50 @@ function MainContainer() {
     
     
 
-    const {
-        totalCharacter,
-        setTotalCharacter,
-        setWordCount,
-        setSentenceCount,
-        excludeSpacesIsChecked,
-        setExcludeSpacesIsCheked,
-        textareaValue,
-        setTextareaValue,
-        characterLimitIsChecked,
-        setCharacterLimitIsChecked,
-        limitInput,
-        setLimitInput,
-        limitSet,
-        setLimitSet,
-    } = useContext(CharacterContext);
+    const {state, dispatch} = useContext(CharacterContext);
     
 
     function handleTextareaChange(e) {
         const value = e.target.value;
-        setTextareaValue(value);
+        dispatch({type: 'SET_TEXTAREA', payload: value})
 
         const words = value.trim().split(/\s+/).filter(Boolean);
-        setWordCount(words.length);
+        dispatch({type: 'SET_WORD_COUNT', payload: words.length});
 
         const sentences = value.split(/[.!?]+/).filter(Boolean);
-        setSentenceCount(sentences.length);
+        dispatch({type: 'SET_SENTENCE_COUNT', payload: sentences.length})
     }
     useEffect(() => {
-        const length = excludeSpacesIsChecked ? textareaValue.replace(/\s/g, "").length : textareaValue.length;
-        setTotalCharacter(length);
-    }, [textareaValue, excludeSpacesIsChecked]);
+        const length = state.excludeSpacesIsChecked ? state.textAreaValue.replace(/\s/g, "").length : state.textAreaValue.length;
+        dispatch({type: 'SET_TOTAL_CHARACTER', payload: length})
+    }, [state.textAreaValue, state.excludeSpacesIsChecked]);
 
     useEffect(() => {
-        if(characterLimitIsChecked && !limitInput) {
-            setLimitInput(totalCharacter);
-            setLimitSet(true);
+        if(state.characterLimitIsChecked && !state.limitInput) {
+            dispatch({type: 'SET_LIMIT_INPUT', payload: state.totalCharacter})
+            dispatch({type: 'SET_LIMIT_SET', payload: true})
         }
-    }, [characterLimitIsChecked, totalCharacter, limitSet]);
+    }, [state.characterLimitIsChecked, state.totalCharacter, state.limitSet]);
 
     function handleSpaceInputCheckChange(e) {
         const isChecked = e.target.checked;
-        setExcludeSpacesIsCheked(isChecked);
+        dispatch({type: 'TOGGLE_EXCLUDE_SPACES', payload: isChecked})        
     }
 
     function handleCharacterLimitIsChecked(e) {
         const isChecked = e.target.checked;
-        setCharacterLimitIsChecked(isChecked);
-        setLimitInput(Number(totalCharacter));
+        dispatch({type: 'TOGGLE_CHARACTER_LIMIT', payload: isChecked});
+        dispatch({type: 'SET_INPUT_LIMIT', payload: Number(state.totalCharacter)});
     }
 
     
 
     function handleLimitChange(e){
-        setLimitInput(e.target.value)
+        const value = e.target.value;
+        dispatch({type: 'SET_LIMIT_INPUT', payload: value})
     }
 
-    const focusClass = characterLimitIsChecked && totalCharacter > limitInput ? 'focus:ring-orange-500' : 'focus:ring-blue-500';
+    const focusClass = state.characterLimitIsChecked && state.totalCharacter > state.limitInput ? 'focus:ring-orange-500' : 'focus:ring-blue-500';
     
     return(
         <main className={`my-10 ${bgClass}`}>
@@ -83,9 +69,9 @@ function MainContainer() {
                 </textarea>
             </section>
             <section className="mt-4 sm:flex sm:flex-col sm:justify-between">
-                {characterLimitIsChecked && totalCharacter > limitInput && (<article className="mb-5 flex gap-2 items-center">
+                {state.characterLimitIsChecked && state.totalCharacter > state.limitInput && (<article className="mb-5 flex gap-2 items-center">
                     <img src={infoImg} alt="" />
-                    <p className="text-orange-500">Limit reached! Your text exceeds <span>{totalCharacter}</span> characters.</p>
+                    <p className="text-orange-500">Limit reached! Your text exceeds <span>{state.limitInput}</span> characters.</p>
                 </article>)}
                 <div className="sm:flex sm:justify-between">
                     <div className="sm:flex sm:gap-2">
@@ -96,7 +82,7 @@ function MainContainer() {
                         <article className="flex items-center gap-3 mb-2">
                             <input className="" type="checkbox" name="" id="limit-checkbox" onChange={handleCharacterLimitIsChecked} />
                             <label htmlFor="limit-checkbox" className=" text-ba">Set Character Limit</label>
-                            {characterLimitIsChecked && <input type="text" className="w-16 sm:w-14 h-9 sm:h-7 border-1 border-natural-600 rounded-md text-center" value={limitInput} onChange={handleLimitChange} />}
+                            {state.characterLimitIsChecked && <input type="text" className="w-16 sm:w-14 h-9 sm:h-7 border-1 border-natural-600 rounded-md text-center" id='input-limit' value={state.limitInput} onChange={handleLimitChange} />}
                         </article>
                     </div>
                     <p>Approx. reading time: 1 minute</p>

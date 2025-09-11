@@ -6,7 +6,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
 
 function DensityContainer() {
-    const {textareaValue, totalCharacter} = useContext(CharacterContext);
+    const {state} = useContext(CharacterContext);
     const [showMore, setShowMore] = useState(false);
     const [itemsToShow, setItemsToShow] = useState(5);
 
@@ -17,16 +17,15 @@ function DensityContainer() {
     const eachCharResult = useMemo(() => {
         let result = {};
 
-        for (let i = 0; i < textareaValue.length; i++) {
-            if (result[textareaValue[i]]) {
-                result[textareaValue[i]]++;
+        for (let i = 0; i < state.textAreaValue.length; i++) {
+            if (result[state.textAreaValue[i]]) {
+                result[state.textAreaValue[i]]++;
             } else {
-                result[textareaValue[i]] = 1;
+                result[state.textAreaValue[i]] = 1;
             }
         }
         return result;
-        }, [textareaValue]);
-        console.log(Object.keys(eachCharResult).length);
+        }, [state.textAreaValue]);
 
         function handleItemsToShow() {
             setShowMore(prev => !prev);
@@ -40,14 +39,14 @@ function DensityContainer() {
             <section className="h">
                 <ul className="my-5">
                     {Object.entries(eachCharResult).sort(([, countA], [, countB]) => countB - countA).slice(0, itemsToShow).map(([char, count]) => {
-                        const percent = ((count / totalCharacter) * 100).toFixed(2);
+                        const percent = state.totalCharacter ? ((count / state.totalCharacter) * 100).toFixed(2) : "0.00";
                         return(
-                            <li key={char} className="flex items-center gap- justify-between">
+                            <li key={char} className="flex items-center justify-between">
                                 <p className="w-6 text-center">{char.toUpperCase()}</p>
-                                <div className={`relative block w-52 sm:w-10/12 h-3 rounded-md ${bgClass}`}>
-                                    <div className="absolute left-0 top-0 h-3 bg-blue-400 rounded-md" style={{width: `${percent}%`}}></div>
+                                <div className={`relative flex-1 sm:w-10/12 h-3 rounded-md ${bgClass}`}>
+                                    <div className="absolute left-0 top-0 h-3 bg-blue-400 rounded-md" style={{width: `${Math.max(Number(percent), 2)}%`}}></div>
                                 </div>
-                                <p className="w-22 mr-1">{count}({percent}%)</p>
+                                <p className="w-22 mr-1 whitespace-nowrap">{count}({percent}%)</p>
                             </li>
                         );
                     })}
